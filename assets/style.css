@@ -16,7 +16,8 @@
 html {
   -webkit-box-sizing:border-box;
   box-sizing:border-box;
-  font-size:62.5%;line-height:1.15;
+  font-size:80%; 
+  line-height:1.15;
   -webkit-text-size-adjust:100%;
   -moz-text-size-adjust:100%;
   -ms-text-size-adjust:100%;
