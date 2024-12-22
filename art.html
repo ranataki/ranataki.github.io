@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ART ✧ RANA TAKI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    
+    <nav class="nav-container">
+        <div class="nav-content">
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">RANA</a></li>
+                <li><a href="projects.html" class="nav-link">PROJECTS</a></li>
+                <li><a href="art.html" class="nav-link active">ART</a></li>
+                <li><a href="flight-updates.html" class="nav-link">FLIGHT LOG</a></li>
+                <li><a href="https://drive.google.com/file/d/1bYOR4DyamoXm8ZdM0OxGpfBMS4rJlVun/view?usp=sharing" target="_blank" class="nav-link">RESUME</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="rotated-text">DIGITAL ART ✧ 2024</div>
+
+    <main>
+        <div class="content-wrapper">
+            <section class="grid-container">
+                <div class="col-span-12">
+                    <h1 class="mega-text fade-in" style="font-size: clamp(3rem, 10vw, 6rem);">ART<br>GALLERY<span class="sparkle">✧</span></h1>
+                    <p class="fade-in" style="color: var(--red); font-family: var(--font-display); margin-top: 2rem;">
+                        EXPLORING STYLED REALISM AND LIGHT THROUGH OIL PAINTING
+                    </p>
+                </div>
+            </section>
+
+            <section class="grid-container">
+                <div class="col-span-12">
+                    <div class="art-grid">
+                        <!-- Art Piece 1 -->
+                        <article class="art-item fade-in">
+                            <img src="images/art/artwork1.jpg" alt="Portrait of Grandma" class="art-image">
+                            <div class="art-overlay">
+                                <h3>PORTRAIT OF GRANDMA</h3>
+                                <p>Exploration of light and shadows in different colors</p>
+                                <span class="tech-badge">OIL ON CANVAS</span>
+                            </div>
+                        </article>
+
+                        <!-- Art Piece 2 -->
+                        <article class="art-item fade-in">
+                            <img src="images/art/artwork2.jpg" alt="Portrait of Jordan" class="art-image">
+                            <div class="art-overlay">
+                                <h3>ARACHNOPHOBIA</h3>
+                                <p>Exploring ways to draw 3 dimensional cartoons</p>
+                                <span class="tech-badge">OIL ON CANVAS</span>
+                            </div>
+                        </article>
+
+                        <!-- Art Piece 3 -->
+                        <article class="art-item fade-in">
+                            <img src="images/art/artwork3.jpg" alt="Portrait of Grandma" class="art-image">
+                            <div class="art-overlay">
+                                <h3>PORTRAIT OF GRANDMA</h3>
+                                <p>Exploring light and shadow through shades of gray</p>
+                                <span class="tech-badge">OIL ON CANVAS</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="scroll-text">SCROLL FOR MORE ✧</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Custom cursor
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.custom-cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Fade in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
