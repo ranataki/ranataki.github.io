@@ -44,12 +44,7 @@
                     </div>
                 </div>
                 <div class="hero-image fade-in">
-                    <div class="rotating-profile">
-                        <img src="images/profile/profile-1.jpg" alt="Rana Hiking" class="profile-img active">
-                        <img src="images/profile/profile-2.jpg" alt="Rana Running" class="profile-img">
-                        <img src="images/profile/profile-3.jpg" alt="Rana Flying" class="profile-img">
-                        <img src="images/profile/profile-4.jpg" alt="Rana Skiing" class="profile-img">
-                    </div>
+                    <img src="images/profile/profile-1.jpg" alt="Rana Hiking" class="profile-img">
                 </div>
             </section>
 
@@ -110,23 +105,6 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Rotating profile pictures
-        let currentProfileIndex = 0;
-        const profileImages = document.querySelectorAll('.profile-img');
-        
-        function rotateProfile() {
-            // Remove active class from current image
-            profileImages[currentProfileIndex].classList.remove('active');
-            
-            // Move to next image
-            currentProfileIndex = (currentProfileIndex + 1) % profileImages.length;
-            
-            // Add active class to new image
-            profileImages[currentProfileIndex].classList.add('active');
-        }
-        
-        // Rotate every 3 seconds
-        setInterval(rotateProfile, 3000);
 
         // Fade in animation
         const observerOptions = {
