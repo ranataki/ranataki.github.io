@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECTS ✧ RANA TAKI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .project-preview {
+            position: relative;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .project-preview:hover {
+            transform: translateY(-5px);
+            border-color: var(--red);
+            box-shadow: 0 10px 30px rgba(255, 59, 48, 0.2);
+        }
+        
+        .project-preview-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .project-preview-content {
+            padding: 1.5rem;
+        }
+        
+        .project-preview h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .project-preview p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        
+        .project-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .project-modal-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--red);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: var(--red-dark);
+            transform: rotate(90deg);
+        }
+        
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .project-details {
+            padding: 2rem;
+        }
+        
+        .project-details h2 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            color: var(--red);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .project-details .description {
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .project-features {
+            margin-bottom: 2rem;
+        }
+        
+        .project-features h3 {
+            font-family: var(--font-display);
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+        
+        .project-features ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .project-features li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .project-features li::before {
+            content: "✧";
+            color: var(--red);
+            position: absolute;
+            left: 0;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .project-link {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--red);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .project-link:hover {
+            background: var(--red-dark);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 2px solid var(--red);
+            color: var(--red);
+            font-family: var(--font-display);
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover {
+            background: var(--red);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn.active {
+            background: var(--red);
+            color: white;
+        }
+        
+        .project-preview {
+            transition: all 0.3s ease;
+        }
+        
+        .project-preview.hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .project-modal-content {
+                margin: 1rem;
+                border-radius: 8px;
+            }
+            
+            .project-details {
+                padding: 1.5rem;
+            }
+            
+            .project-details h2 {
+                font-size: 2rem;
+            }
+            
+            .category-filters {
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    
+    <nav class="nav-container">
+        <div class="nav-content">
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">RANA</a></li>
+                <li><a href="projects-new.html" class="nav-link active">PROJECTS</a></li>
+                <li><a href="art-consistent.html" class="nav-link">ART & PHOTOGRAPHY</a></li>
+                <li><a href="resume.html" class="nav-link">RESUME</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="rotated-text">CREATIVE WORKS ✧ 2024</div>
+
+    <main>
+        <div class="content-wrapper">
+            <section class="grid-container">
+                <div class="col-span-12">
+                    <h1 class="mega-text fade-in" style="font-size: clamp(3rem, 10vw, 6rem);">PROJECTS<span class="sparkle">✧</span></h1>
+                </div>
+            </section>
+
+            <section class="grid-container">
+                <div class="col-span-12">
+                    <div class="category-filters">
+                        <button class="filter-btn active" data-category="all">SHOW ALL</button>
+                        <button class="filter-btn" data-category="manufacturing-design">MANUFACTURING & DESIGN</button>
+                        <button class="filter-btn" data-category="simulation-analysis">SIMULATION & ANALYSIS</button>
+                        <button class="filter-btn" data-category="ai-software">AI & SOFTWARE</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid-container">
+                <div class="col-span-12">
+                    <div class="project-grid">
+                        <!-- 1. Motion Platform Manufacturing -->
+                        <div class="project-preview fade-in" data-categories="manufacturing-design" onclick="openProjectModal('project8')">
+                            <img src="images/projects/motion-platform-main.jpg" alt="Motion Platform" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>MOTION PLATFORM MANUFACTURING</h3>
+                                <p>Manufacturing precision parts for lab motion platform using milling, stress testing, and 3D printing...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Milling</span>
+                                    <span class="tech-badge">Stress Testing</span>
+                                    <span class="tech-badge">3D Printing</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Pomelo Robot -->
+                        <div class="project-preview fade-in" data-categories="ai-software manufacturing-design" onclick="openProjectModal('project2')">
+                            <img src="images/projects/pomelo-main.jpg" alt="Pomelo Robot" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>POMELO TEACHING ROBOT</h3>
+                                <p>An innovative teaching assistant robot designed to make learning computer science fundamentals fun and tangible...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">OpenCV</span>
+                                    <span class="tech-badge">Python</span>
+                                    <span class="tech-badge">Robotics</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Flight Log App -->
+                        <div class="project-preview fade-in" data-categories="ai-software" onclick="openProjectModal('project3')">
+                            <video src="videos/flight-app-demo.mp4" alt="Flight Log App Demo" class="project-preview-image" autoplay muted loop playsinline></video>
+                            <div class="project-preview-content">
+                                <h3>FLIGHT LOG APPLICATION</h3>
+                                <p>A comprehensive flight tracking application for pilots to log flights, track progress, and manage aviation data...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Swift</span>
+                                    <span class="tech-badge">iOS</span>
+                                    <span class="tech-badge">Core Data</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. FashionX Clothes -->
+                        <div class="project-preview fade-in" data-categories="manufacturing-design" onclick="openProjectModal('project1')">
+                            <img src="images/projects/fashionx-main.jpg" alt="FashionX Skeleton Clothes" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>FASHIONX SKELETON GARMENTS</h3>
+                                <p>Life-sized frog and stingray skeleton garments combining precision engineering, laser cutting, and fashion design...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Laser Cutting</span>
+                                    <span class="tech-badge">Fashion Design</span>
+                                    <span class="tech-badge">Stress Testing</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Shot Ski Manufacturing -->
+                        <div class="project-preview fade-in" data-categories="manufacturing-design" onclick="openProjectModal('project4')">
+                            <img src="images/projects/shot-ski-main.jpg" alt="Shot Ski" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>SHOT SKI MANUFACTURING</h3>
+                                <p>Custom shot ski manufactured from wood using sandcasting, turning, and precision calculations with 3D design...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Woodworking</span>
+                                    <span class="tech-badge">Sandcasting</span>
+                                    <span class="tech-badge">CAD Design</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. Clipper AI -->
+                        <div class="project-preview fade-in" data-categories="ai-software" onclick="openProjectModal('project7')">
+                            <img src="images/projects/clippy-main.jpg" alt="Clipper AI" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>RESEARCH AT SISL</h3>
+                                <p>Stanford research project developing an LLM that interprets pilot operating handbook graphs and charts...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">LLM</span>
+                                    <span class="tech-badge">Python</span>
+                                    <span class="tech-badge">Research</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 7. Airport Gate Assignment -->
+                        <div class="project-preview fade-in" data-categories="simulation-analysis ai-software" onclick="openProjectModal('project10')">
+                            <img src="papers/airport-gate-paper-cover.jpg" alt="Airport Gate Assignment Research Paper" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>AIRPORT GATE ASSIGNMENT ALGORITHM</h3>
+                                <p>Modified Monte Carlo Tree Search algorithm for optimal airport gate assignment with research paper...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">MCTS</span>
+                                    <span class="tech-badge">Algorithms</span>
+                                    <span class="tech-badge">Research Paper</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8. Flight Club -->
+                        <div class="project-preview fade-in" data-categories="manufacturing-design" onclick="openProjectModal('project9')">
+                            <img src="images/projects/flight-club-main.jpg" alt="Flight Club Model Plane" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>FLIGHT CLUB MODEL AIRCRAFT</h3>
+                                <p>Collaborative design and manufacturing of model aircraft for Stanford Flight Club competitions...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Aerodynamics</span>
+                                    <span class="tech-badge">Model Making</span>
+                                    <span class="tech-badge">Team Project</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9. Izmo Robot -->
+                        <div class="project-preview fade-in" data-categories="manufacturing-design ai-software" onclick="openProjectModal('project11')">
+                            <img src="images/projects/izmo-main.jpg" alt="Izmo Cigarette Collection Robot" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>IZMO CIGARETTE COLLECTION ROBOT</h3>
+                                <p>Autonomous robot designed to collect cigarette butts using computer vision, Arduino control, and Raspberry Pi processing...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Arduino</span>
+                                    <span class="tech-badge">Raspberry Pi</span>
+                                    <span class="tech-badge">OpenCV</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10. ACL Knee Brace -->
+                        <div class="project-preview fade-in" data-categories="manufacturing-design" onclick="openProjectModal('project15')">
+                            <img src="images/projects/acl-brace-main.jpg" alt="ACL Knee Brace" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>ACL KNEE BRACE</h3>
+                                <p>3D designed lightweight ACL knee brace for enhanced recovery and rehabilitation support...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">3D Design</span>
+                                    <span class="tech-badge">Medical Device</span>
+                                    <span class="tech-badge">Biomechanics</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Cessna Landing Gear FEA -->
+                        <div class="project-preview fade-in" data-categories="simulation-analysis" onclick="openProjectModal('project6')">
+                            <img src="images/projects/landing-gear-main.jpg" alt="Landing Gear Simulation" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>CESSNA LANDING GEAR FEA</h3>
+                                <p>Finite element analysis of Cessna landing gear using ParaView and FEniCS to test different configurations...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">FEA</span>
+                                    <span class="tech-badge">ParaView</span>
+                                    <span class="tech-badge">FEniCS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 12. Headphone Attachment -->
+                        <div class="project-preview fade-in" data-categories="manufacturing-design" onclick="openProjectModal('project5')">
+                            <img src="images/projects/headphone-main.jpg" alt="Headphone Attachment" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>HEADPHONE ATTACHMENT DESIGN</h3>
+                                <p>Iterative design and 3D printing of custom headphone attachment with multiple test prototypes...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">3D Printing</span>
+                                    <span class="tech-badge">Autodesk Fusion</span>
+                                    <span class="tech-badge">Prototyping</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 13. Kinetic Sculpture -->
+                        <div class="project-preview fade-in" data-categories="manufacturing-design" onclick="openProjectModal('project13')">
+                            <img src="images/projects/kinetic-sculpture-main.jpg" alt="Kinetic Sculpture" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>KINETIC SCULPTURE</h3>
+                                <p>ME 102 project combining mechanical engineering principles with artistic design using gears, laser cutting, and 3D printing...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Autodesk Fusion</span>
+                                    <span class="tech-badge">Laser Cutting</span>
+                                    <span class="tech-badge">3D Printing</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 14. Memories App -->
+                        <div class="project-preview fade-in" data-categories="ai-software" onclick="openProjectModal('project12')">
+                            <img src="images/projects/memories-main.jpg" alt="Memories Photo Gallery App" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>MEMORIES PHOTO GALLERY</h3>
+                                <p>Location-based photo sharing application allowing users to create and discover photo galleries tied to specific cities and areas...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">Mobile App</span>
+                                    <span class="tech-badge">Location Services</span>
+                                    <span class="tech-badge">Photo Sharing</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 15. CS248B Character Animation Projects -->
+                        <div class="project-preview fade-in" data-categories="ai-software" onclick="openProjectModal('project14')">
+                            <img src="images/projects/cs248b-main.jpg" alt="CS248B Projects" class="project-preview-image">
+                            <div class="project-preview-content">
+                                <h3>CS248B: CHARACTER ANIMATION PROJECTS</h3>
+                                <p>Three sophisticated gaming projects exploring advanced physics simulation and computer graphics...</p>
+                                <div class="tech-stack">
+                                    <span class="tech-badge">JavaScript</span>
+                                    <span class="tech-badge">Open Processing</span>
+                                    <span class="tech-badge">Blender</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Project Modals -->
+    
+    <!-- Project 4 Modal - Shot Ski -->
+    <div id="project4Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project4')">&times;</button>
+            
+            <div class="project-gallery">
+                <img src="images/projects/shot-ski-1.jpg" alt="Shot Ski Design" class="gallery-image">
+                <img src="images/projects/shot-ski-2.jpg" alt="Wood Turning Process" class="gallery-image">
+                <img src="images/projects/shot-ski-3.jpg" alt="Sandcasting Components" class="gallery-image">
+                <img src="images/projects/shot-ski-4.jpg" alt="Final Product" class="gallery-image">
+                <img src="images/projects/shot-ski-5.jpg" alt="Sandcasting Components" class="gallery-image">
+                <img src="images/projects/shot-ski-6.jpg" alt="Final Product" class="gallery-image">
+            </div>
+            
+            <div class="project-details">
+                <h2>SHOT SKI MANUFACTURING</h2>
+                
+                <div class="description">
+                    <p>Manufacturing project for my ME 103 class. I designed and fabricated a custom shot ski from raw wood and aluminum. The aluminum casts are Corvatsch and Corviglia, dedication to my home mountains.</p>
+                    
+                    <p>The shot glasses are made of aluminum, and was made by turning. They are mounted on the ski with strong magnets.</p>
+                    
+                </div>
+                
+                <div class="project-features">
+                    <h3>Manufacturing Processes:</h3>
+                    <ul>
+                        <li>Wood selection and preparation for grain orientation</li>
+                        <li>Wood bending, sanding, and assembly</li>
+                        <li>Sandcasting for custom metal hardware</li>
+                        <li>CAD modeling for design optimization and fit testing</li>
+                        <li>Structural calculations for load distribution and safety factors</li>
+                        <li>Turning and machining for aluminum shot glasses and alignment features</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">Woodworking</span>
+                    <span class="tech-badge">Sandcasting</span>
+                    <span class="tech-badge">CAD Design</span>
+                    <span class="tech-badge">Manufacturing</span>
+                    <span class="tech-badge">Structural Analysis</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 5 Modal - Headphone Attachment -->
+    <div id="project5Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project5')">&times;</button>
+            
+            <div class="project-gallery">
+                <img src="images/projects/headphone-1.jpg" alt="Initial Design Concept" class="gallery-image">
+                <img src="images/projects/headphone-2.jpg" alt="Prototype Testing" class="gallery-image">
+                <img src="images/projects/headphone-3.jpg" alt="3D Printing Process" class="gallery-image">
+                <img src="images/projects/headphone-4.jpg" alt="Final Attachment" class="gallery-image">
+                <img src="images/projects/headphone-5.jpg" alt="Final Attachment" class="gallery-image">
+            </div>
+            
+            <div class="project-details">
+                <h2>HEADPHONE ATTACHMENT DESIGN</h2>
+                
+                <div class="description">
+                    <p>An iterative design project focused on creating a custom headphone attachment. The project involved multiple design iterations, rapid prototyping, and user testing.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Design Process:</h3>
+                    <ul>
+                        <li>Parametric CAD modeling in Autodesk Fusion 360</li>
+                        <li>Rapid prototyping with multiple 3D printing materials</li>
+                        <li>Iterative design refinement</li>
+                        <li>Stress analysis and durability testing</li>
+                        <li>Manufacturing optimization for 3D printing</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">3D Printing</span>
+                    <span class="tech-badge">Autodesk Fusion</span>
+                    <span class="tech-badge">Prototyping</span>
+                    <span class="tech-badge">User Testing</span>
+                    <span class="tech-badge">Design Iteration</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 6 Modal - Landing Gear Simulation -->
+    <div id="project6Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project6')">&times;</button>
+            
+            <div class="project-gallery">
+                <img src="images/projects/landing-gear-1.jpg" alt="FEA Mesh Generation" class="gallery-image">
+                <img src="images/projects/landing-gear-2.jpg" alt="Stress Analysis Results" class="gallery-image">
+                <img src="images/projects/landing-gear-3.jpg" alt="Deformation Visualization" class="gallery-image">
+                <img src="images/projects/landing-gear-4.jpg" alt="Parametric Study Results" class="gallery-image">
+            </div>
+            
+            <div class="project-details">
+                <h2>CESSNA LANDING GEAR FEA</h2>
+                
+                <div class="description">
+                    <p>A finite element analysis project for ME 123, investigating the structural behavior of Cessna aircraft landing gear under various loading conditions. The study examined different geometric configurations and material thicknesses to optimize performance.</p>
+                    
+                    <p>Using ParaView for visualization and FEniCS for computational analysis, I developed detailed models that accurately predicted stress distributions, deformation patterns, and failure modes under realistic operating conditions.</p>
+                    
+                    <p>The analysis included parametric studies varying landing gear geometry, material properties, and loading scenarios to identify optimal design configurations for weight reduction while maintaining structural integrity.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Analysis Capabilities:</h3>
+                    <ul>
+                        <li>3D finite element mesh generation and refinement</li>
+                        <li>Multi-physics simulation including structural and thermal effects</li>
+                        <li>Parametric studies of geometric and material variables</li>
+                        <li>Stress concentration analysis at critical joints</li>
+                        <li>Fatigue life prediction under cyclic loading</li>
+                        <li>Optimization algorithms for weight and performance</li>
+                        <li>Comprehensive reporting and visualization of results</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">FEA</span>
+                    <span class="tech-badge">ParaView</span>
+                    <span class="tech-badge">FEniCS</span>
+                    <span class="tech-badge">Structural Analysis</span>
+                    <span class="tech-badge">Aerospace Engineering</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 7 Modal - Clipper AI -->
+    <div id="project7Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project7')">&times;</button>
+            
+            
+            <div class="project-details">
+                <h2>RESEARCH AT SISL</h2>
+                
+                <div class="description">
+                    <p>A cutting-edge research project at Stanford developing a specialized large language model capable of interpreting and analyzing pilot operating handbook (POH) graphs and charts. This project addresses a critical need in aviation for automated analysis of complex performance data.</p>
+                    
+                    <p>The system combines computer vision techniques for graph digitization with natural language processing for contextual understanding of aviation terminology and procedures. The LLM was trained on extensive aviation datasets to understand the nuanced relationships between aircraft performance parameters.</p>
+                    
+                    <p>Clippey AI represents a significant advancement in aviation safety technology, providing pilots with instant access to critical performance data interpretation and decision support during flight planning and operations.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Technical Innovations:</h3>
+                    <ul>
+                        <li>Computer vision pipeline for POH graph digitization</li>
+                        <li>Custom LLM architecture optimized for aviation domain</li>
+                        <li>Multi-modal learning combining text and graphical data</li>
+                        <li>Real-time performance data interpretation</li>
+                        <li>Integration with existing aviation software systems</li>
+                        <li>Comprehensive validation against certified flight data</li>
+                        <li>User interface designed for cockpit environments</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">LLM</span>
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Computer Vision</span>
+                    <span class="tech-badge">Aviation</span>
+                    <span class="tech-badge">Research</span>
+                    <span class="tech-badge">Machine Learning</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 8 Modal - Motion Platform -->
+    <div id="project8Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project8')">&times;</button>
+            
+            <div class="project-gallery">
+                <img src="images/projects/motion-platform-1.jpg" alt="Milling Operations" class="gallery-image">
+                <img src="images/projects/motion-platform-2.jpg" alt="Stress Testing Setup" class="gallery-image">
+                <img src="images/projects/motion-platform-3.jpg" alt="3D Printed Components" class="gallery-image">
+                <img src="images/projects/motion-platform-4.jpg" alt="Assembly Process" class="gallery-image">
+                <img src="images/projects/motion-platform-5.jpg" alt="Assembly Process" class="gallery-image">
+                <img src="images/projects/motion-platform-6.jpg" alt="Assembly Process" class="gallery-image">
+            </div>
+            
+            <div class="project-details">
+                <h2>MOTION PLATFORM MANUFACTURING</h2>
+                
+                <div class="description">
+                    <p>A precision manufacturing project involving the fabrication of critical components for a research lab motion platform. The project required advanced machining techniques, material testing, and quality assurance to meet strict performance specifications.</p>
+                    
+                    <p>Working with steel components, I performed comprehensive stress testing to validate material properties and ensure reliability under dynamic loading conditions. The manufacturing process included both traditional machining and modern additive manufacturing techniques.</p>
+                    
+                    <p>Quality control was paramount, with each component undergoing rigorous testing and dimensional verification before integration into the final motion platform assembly.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Manufacturing Processes:</h3>
+                    <ul>
+                        <li>Precision CNC milling of steel components</li>
+                        <li>Material stress testing and characterization</li>
+                        <li>3D printing of prototype and production parts</li>
+                        <li>CAD modeling and design optimization in Autodesk Fusion</li>
+                        <li>Quality assurance and dimensional inspection</li>
+                        <li>Assembly procedures and integration testing</li>
+                        <li>Documentation of manufacturing processes and specifications</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">Milling</span>
+                    <span class="tech-badge">Stress Testing</span>
+                    <span class="tech-badge">3D Printing</span>
+                    <span class="tech-badge">Autodesk Fusion</span>
+                    <span class="tech-badge">Quality Control</span>
+                    <span class="tech-badge">Steel Fabrication</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 9 Modal - Flight Club -->
+    <div id="project9Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project9')">&times;</button>
+            
+            
+            <div class="project-details">
+                <h2>FLIGHT CLUB MODEL AIRCRAFT</h2>
+                
+                <div class="description">
+                    <p>A collaborative engineering project with Stanford Flight Club, focusing on the design and manufacturing of competition model aircraft. The project combined aerodynamic principles with practical manufacturing constraints to create high-performance flying vehicles.</p>
+                    
+                    <p>Working as part of a multidisciplinary team, I contributed to wing design, structural analysis, and manufacturing processes. The project required balancing competing requirements of weight, strength, and aerodynamic efficiency.</p>
+                    
+                    <p>The aircraft successfully competed in intercollegiate competitions, demonstrating the effectiveness of our design and manufacturing approach through consistent performance and reliability.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Project Contributions:</h3>
+                    <ul>
+                        <li>Aerodynamic analysis and wing design optimization</li>
+                        <li>Structural design for weight and strength balance</li>
+                        <li>Manufacturing process development and implementation</li>
+                        <li>Team coordination and project management</li>
+                        <li>Flight testing and performance validation</li>
+                        <li>Competition preparation and logistics</li>
+                        <li>Documentation of design decisions and lessons learned</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">Aerodynamics</span>
+                    <span class="tech-badge">Model Making</span>
+                    <span class="tech-badge">Team Project</span>
+                    <span class="tech-badge">Competition</span>
+                    <span class="tech-badge">Flight Testing</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 10 Modal - Airport Gate Assignment -->
+    <div id="project10Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project10')">&times;</button>
+            
+            <div class="project-details">
+                <h2>AIRPORT GATE ASSIGNMENT ALGORITHM</h2>
+                
+                <div class="description">
+                    <p>An advanced algorithmic research project for Decision Making Under Uncertainty, developing modified Monte Carlo Tree Search (MCTS) algorithms for optimal airport gate assignment. The project addressed the complex optimization challenge of efficiently assigning aircraft to gates while minimizing delays and operational costs.</p>
+                    
+                    <p>The research involved implementing and comparing multiple algorithmic approaches, including traditional optimization methods and novel MCTS variants. Extensive computational experiments validated the performance improvements achieved through the modified algorithms.</p>
+                    
+                    <p>The project culminated in a comprehensive research paper documenting the algorithmic innovations, experimental methodology, and performance analysis, contributing to the field of operations research in aviation.</p>
+                    
+                    <div class="paper-section" style="margin-top: 20px;">
+                        <div class="paper-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; border-left: 4px solid #00ff88;">
+                            <div>
+                                <h4 style="margin: 0 0 5px 0; color: #00ff88;">📄 Research Paper</h4>
+                                <p style="margin: 0; font-size: 14px;">Read the full academic paper detailing the algorithmic approach, experimental results, and performance analysis.</p>
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <button onclick="togglePDFViewer()" class="pdf-toggle-btn" style="padding: 8px 16px; background: #00ff88; color: #000; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                    👁️ Preview Paper
+                                </button>
+                                <a href="papers/airport-gate-assignment-paper.pdf" target="_blank" class="paper-download-btn" style="display: inline-block; padding: 8px 16px; background: transparent; color: #00ff88; text-decoration: none; border: 2px solid #00ff88; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
+                                    📖 Open Full PDF
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div id="pdfViewer" style="display: none; margin-top: 15px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                            <iframe src="papers/airport-gate-assignment-paper.pdf" width="100%" height="600px" style="border: none; border-radius: 8px;"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Research Contributions:</h3>
+                    <ul>
+                        <li>Modified Monte Carlo Tree Search algorithm development</li>
+                        <li>Comprehensive performance benchmarking and analysis</li>
+                        <li>Multi-objective optimization for competing constraints</li>
+                        <li>Scalability testing with realistic airport data</li>
+                        <li>Statistical validation of algorithmic improvements</li>
+                        <li>Research paper writing and peer review process</li>
+                        <li>Presentation of results to academic and industry audiences</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">MCTS</span>
+                    <span class="tech-badge">Algorithms</span>
+                    <span class="tech-badge">Research Paper</span>
+                    <span class="tech-badge">Optimization</span>
+                    <span class="tech-badge">Operations Research</span>
+                    <span class="tech-badge">Python</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 11 Modal - Izmo Robot -->
+    <div id="project11Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project11')">&times;</button>
+            
+            <div class="project-gallery">
+                <img src="images/projects/izmo-1.jpg" alt="Robot Design and Assembly" class="gallery-image">
+                <img src="images/projects/izmo-2.jpg" alt="Computer Vision System" class="gallery-image">
+                <img src="images/projects/izmo-3.jpg" alt="Arduino Control System" class="gallery-image">
+                <img src="images/projects/izmo-4.jpg" alt="Field Testing" class="gallery-image">
+            </div>
+            
+            <div class="project-details">
+                <h2>IZMO CIGARETTE COLLECTION ROBOT</h2>
+                
+                <div class="description">
+                    <p>Izmo is an autonomous environmental cleanup robot designed to identify and collect cigarette butts from public spaces. The project combines computer vision, embedded systems, and mechanical design to create an effective solution for urban waste management.</p>
+                    
+                    <p>The robot uses OpenCV-powered computer vision running on a Raspberry Pi to detect and locate cigarette butts in real-time. An Arduino microcontroller manages the mechanical systems including navigation, collection mechanisms, and sensor integration.</p>
+                    
+                    <p>The project addresses a significant environmental challenge, as cigarette butts are among the most common forms of litter worldwide. Izmo demonstrates how robotics and AI can be applied to create practical solutions for environmental sustainability.</p>
+                    
+                    <div class="paper-section" style="margin-top: 20px;">
+                        <div class="paper-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; border-left: 4px solid #00ff88;">
+                            <div>
+                                <h4 style="margin: 0 0 5px 0; color: #00ff88;">📄 Project Documentation</h4>
+                                <p style="margin: 0; font-size: 14px;">Read the complete technical documentation covering design, implementation, and testing results.</p>
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <button onclick="togglePDFViewer('izmo')" class="pdf-toggle-btn" style="padding: 8px 16px; background: #00ff88; color: #000; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                    👁️ Preview Paper
+                                </button>
+                                <a href="papers/izmo-robot.pdf" target="_blank" class="paper-download-btn" style="display: inline-block; padding: 8px 16px; background: transparent; color: #00ff88; text-decoration: none; border: 2px solid #00ff88; border-radius: 4px; font-weight: 600; transition: all 0.3s ease;">
+                                    📖 Open Full PDF
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div id="izmoPdfViewer" style="display: none; margin-top: 15px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                            <iframe src="papers/izmo-robot.pdf" width="100%" height="600px" style="border: none; border-radius: 8px;"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Technical Systems:</h3>
+                    <ul>
+                        <li>OpenCV-based object detection for cigarette butt identification</li>
+                        <li>Raspberry Pi 4 for computer vision processing and decision making</li>
+                        <li>Arduino Uno for real-time motor control and sensor management</li>
+                        <li>Custom mechanical collection system with servo-driven actuators</li>
+                        <li>Ultrasonic sensors for obstacle avoidance and navigation</li>
+                        <li>3D printed chassis and components designed in Autodesk Fusion 360</li>
+                        <li>Battery management system for extended autonomous operation</li>
+                        <li>Wireless communication for remote monitoring and control</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">Arduino</span>
+                    <span class="tech-badge">Raspberry Pi</span>
+                    <span class="tech-badge">OpenCV</span>
+                    <span class="tech-badge">Autodesk Fusion</span>
+                    <span class="tech-badge">3D Printing</span>
+                    <span class="tech-badge">Robotics</span>
+                    <span class="tech-badge">Computer Vision</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 12 Modal - Memories App -->
+    <div id="project12Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project12')">&times;</button>
+            
+
+            
+            <div class="project-details">
+                <h2>MEMORIES PHOTO GALLERY</h2>
+                
+                <div class="description">
+                    <p>Memories is a SwiftUI-based iOS application for location-based photo sharing through QR codes. The app allows users to create and discover photo galleries tied to specific locations, transforming how people share and experience places through visual storytelling.</p>
+                    
+                    <p>Built with Firebase backend for authentication, storage, and real-time database functionality, the app features QR code scanning to easily access location-specific galleries. Users can capture and manage photos with automatic location tagging and daily upload limits per location.</p>
+                    
+                    <p>The application combines modern iOS development practices with cloud infrastructure to create a seamless photo sharing experience that encourages community engagement and local discovery.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Key Features:</h3>
+                    <ul>
+                        <li>SwiftUI-based native iOS interface with modern design patterns</li>
+                        <li>QR code scanning functionality for easy gallery access</li>
+                        <li>Firebase authentication and user management system</li>
+                        <li>Real-time database for instant photo sharing and updates</li>
+                        <li>Location-based content organization with GPS integration</li>
+                        <li>Photo capture and management with automatic compression</li>
+                        <li>Daily upload limit tracking per location for content moderation</li>
+                        <li>Cloud storage integration for scalable photo hosting</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">SwiftUI</span>
+                    <span class="tech-badge">Firebase</span>
+                    <span class="tech-badge">QR Code Scanning</span>
+                    <span class="tech-badge">Location Services</span>
+                    <span class="tech-badge">iOS Development</span>
+                    <span class="tech-badge">Cloud Storage</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 13 Modal - Kinetic Sculpture -->
+    <div id="project13Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project13')">&times;</button>
+            
+            <div class="project-gallery">
+                <img src="images/projects/kinetic-sculpture-1.jpg" alt="Sculpture Design Process" class="gallery-image">
+                <img src="images/projects/kinetic-sculpture-2.jpg" alt="Gear Mechanism" class="gallery-image">
+                <img src="images/projects/kinetic-sculpture-3.jpg" alt="Laser Cut Components" class="gallery-image">
+                <img src="images/projects/kinetic-sculpture-4.jpg" alt="Final Assembly" class="gallery-image">
+            </div>
+            
+            <div class="project-details">
+                <h2>KINETIC SCULPTURE</h2>
+                
+                <div class="description">
+                    <p>A mechanical engineering art project for ME 102 that combines technical precision with creative expression. The kinetic sculpture demonstrates fundamental mechanical principles through an aesthetically engaging moving artwork that showcases gear systems, motion transfer, and dynamic balance.</p>
+                    
+                    <p>The project required extensive design work in Autodesk Fusion 360 to model complex gear interactions and ensure proper mechanical function. Precision laser cutting was used to fabricate intricate components, while 3D printing enabled rapid prototyping of custom parts and mechanisms.</p>
+                    
+                    <p>The sculpture serves as both an educational tool demonstrating mechanical engineering concepts and an artistic statement about the beauty of engineered motion, bridging the gap between technical functionality and creative expression.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Engineering Elements:</h3>
+                    <ul>
+                        <li>Complex gear train design for smooth motion transfer</li>
+                        <li>Precision CAD modeling in Autodesk Fusion 360</li>
+                        <li>Laser cutting for accurate component fabrication</li>
+                        <li>3D printing for custom mechanical parts and housings</li>
+                        <li>Dynamic balance analysis for stable operation</li>
+                        <li>Material selection for durability and aesthetic appeal</li>
+                        <li>Assembly optimization for maintenance and adjustment</li>
+                        <li>Integration of artistic design with mechanical function</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">Autodesk Fusion</span>
+                    <span class="tech-badge">Laser Cutting</span>
+                    <span class="tech-badge">3D Printing</span>
+                    <span class="tech-badge">Mechanical Design</span>
+                    <span class="tech-badge">Gear Systems</span>
+                    <span class="tech-badge">Art & Engineering</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 14 Modal - FashionX Clothes -->
+    <div id="project14Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project14')">&times;</button>
+            
+            <div class="project-gallery">
+                <img src="images/projects/fashionx-1.jpg" alt="Skeleton Design Process" class="gallery-image">
+                <img src="images/projects/fashionx-2.jpg" alt="Laser Cut Skeleton Parts" class="gallery-image">
+                <img src="images/projects/fashionx-3.jpg" alt="Garment Construction" class="gallery-image">
+                <img src="images/projects/fashionx-4.jpg" alt="Final Fashion Show" class="gallery-image">
+                <img src="images/projects/fashionx-5.jpg" alt="Me and my models :D" class="gallery-image">
+                <img src="images/projects/fashionx-6.jpg" alt="Stringray Skeleton Garment" class="gallery-image">
+            </div>
+            
+            <div class="project-details">
+                <h2>FASHIONX SKELETON GARMENTS</h2>
+                
+                <div class="description">
+                    <p>An innovative fashion design project for FashionX combining precision engineering with haute couture. The collection features life-sized frog and stingray skeleton garments that merge anatomical accuracy with wearable art, creating striking pieces that blur the line between fashion and scientific visualization.</p>
+                    
+                    <p>Each skeleton was meticulously designed in Autodesk Fusion 360 based on anatomical research, then fabricated using precision laser cutting techniques. The garments required extensive stress testing to ensure the delicate skeleton structures could withstand the dynamic forces of runway modeling while maintaining their intricate detail.</p>
+                    
+                    <p>The project demanded expertise in both engineering and fashion construction, combining traditional sewing techniques with modern fabrication methods to create garments that are both structurally sound and visually stunning.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Design & Engineering:</h3>
+                    <ul>
+                        <li>Anatomically accurate skeleton modeling from biological references</li>
+                        <li>Precision laser cutting for intricate bone structure fabrication</li>
+                        <li>Stress testing protocols for wearable structural integrity</li>
+                        <li>Advanced sewing techniques for skeleton-to-fabric integration</li>
+                        <li>Material selection balancing durability and aesthetic appeal</li>
+                        <li>Fit engineering for runway model compatibility</li>
+                        <li>Quality control processes for delicate component assembly</li>
+                        <li>Fashion show preparation and garment maintenance protocols</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">Laser Cutting</span>
+                    <span class="tech-badge">Fashion Design</span>
+                    <span class="tech-badge">Stress Testing</span>
+                    <span class="tech-badge">Autodesk Fusion</span>
+                    <span class="tech-badge">Precision Engineering</span>
+                    <span class="tech-badge">Sewing & Construction</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 15 Modal - ACL Knee Brace -->
+    <div id="project15Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project15')">&times;</button>
+            
+            <div class="project-gallery">
+                <img src="images/projects/acl-brace-1.jpg" alt="3D Design Process" class="gallery-image">
+                <img src="images/projects/acl-brace-2.jpg" alt="Biomechanical Analysis" class="gallery-image">
+                <img src="images/projects/acl-brace-3.jpg" alt="Prototype Testing" class="gallery-image">
+                <img src="images/projects/acl-brace-4.jpg" alt="Final Brace Design" class="gallery-image">
+            </div>
+            
+            <div class="project-details">
+                <h2>ACL KNEE BRACE</h2>
+                
+                <div class="description">
+                    <p>A custom-designed lightweight ACL knee brace developed specifically for enhanced recovery and rehabilitation support. This medical device project combines biomechanical engineering principles with 3D design technology to create a personalized orthopedic solution.</p>
+                    
+                    <p>The brace was designed using advanced 3D modeling software with careful consideration of knee joint biomechanics, ACL injury recovery requirements, and patient comfort. The lightweight design prioritizes mobility while providing targeted support to the anterior cruciate ligament during the healing process.</p>
+                    
+                    <p>The project involved extensive research into ACL injury mechanisms, rehabilitation protocols, and existing brace designs to create an optimized solution that balances protection, comfort, and functionality for daily activities and physical therapy.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Design & Engineering:</h3>
+                    <ul>
+                        <li>Biomechanical analysis of knee joint movement and ACL function</li>
+                        <li>3D modeling and parametric design for custom fit</li>
+                        <li>Lightweight material selection for comfort and durability</li>
+                        <li>Ergonomic design considerations for extended wear</li>
+                        <li>Support structure optimization for ACL protection</li>
+                        <li>Range of motion analysis and testing</li>
+                        <li>Integration with rehabilitation exercise protocols</li>
+                        <li>User feedback incorporation and design iteration</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">3D Design</span>
+                    <span class="tech-badge">Medical Device</span>
+                    <span class="tech-badge">Biomechanics</span>
+                    <span class="tech-badge">CAD Modeling</span>
+                    <span class="tech-badge">Orthopedic Engineering</span>
+                    <span class="tech-badge">Rehabilitation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 1 Modal -->
+    <div id="project1Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project1')">&times;</button>
+            
+            
+            <div class="project-details">
+                <h2>CS248B: CHARACTER ANIMATION PROJECTS</h2>
+                
+                <div class="description">
+                    <p>Throughout CS248B: Fundamentals of Character Animation, I developed three sophisticated gaming projects that deepened my understanding of advanced physics simulation and computer graphics. Each project built upon the previous one, creating a comprehensive learning experience in interactive media development.</p>
+                    
+                    <p>Starting with a blob dynamics simulator, I explored the fundamentals of soft-body physics and fluid dynamics. The project required implementing complex mathematical models to simulate realistic blob behavior, including surface tension, viscosity, and collision responses.</p>
+                    
+                    <p>The second project involved creating a physics-based pinball game, where I implemented rigid body dynamics, collision detection systems, and realistic ball physics. This project challenged me to optimize performance while maintaining accurate physical simulations.</p>
+                    
+                    <p>The final project culminated in a character animation system that brought together all previous learnings. I implemented character kinematics using Jacobian matrices, advanced physics simulations with ray casting, penalty forces, and compression mechanics.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Key Technical Achievements:</h3>
+                    <ul>
+                        <li>Implemented Signed Distance Functions (SDFs) for efficient collision detection</li>
+                        <li>Developed large-scale object interaction systems</li>
+                        <li>Created character kinematics using Jacobian matrices</li>
+                        <li>Built advanced physics simulations with ray casting</li>
+                        <li>Implemented penalty forces and compression mechanics</li>
+                        <li>Explored space-time motion algorithms</li>
+                        <li>Optimized performance for real-time interactive applications</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Open Processing</span>
+                    <span class="tech-badge">Blender</span>
+                    <span class="tech-badge">Physics Simulation</span>
+                    <span class="tech-badge">Computer Graphics</span>
+                </div>
+                
+                <div class="project-links">
+                    <a href="https://openprocessing.org/sketch/2418731" target="_blank" class="project-link">
+                        <i class="fas fa-external-link-alt"></i> VIEW LIVE DEMO
+                    </a>
+                    <a href="#" class="project-link">
+                        <i class="fab fa-github"></i> SOURCE CODE
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 2 Modal -->
+    <div id="project2Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project2')">&times;</button>
+            
+
+            
+            <div class="project-details">
+                <h2>POMELO TEACHING ROBOT</h2>
+                
+                <div class="description">
+                    <p>Pomelo is an innovative teaching assistant robot designed to make learning computer science fundamentals fun and tangible for elementary school students. The project bridges the gap between abstract programming concepts and hands-on learning through interactive robotics.</p>
+                    
+                    <p>The system uses Aruco markers (special visual codes) to read and interpret physical block arrangements created by students. Children arrange blocks to create pathways through mazes, and Pomelo brings their solutions to life by following their block-based instructions in real-time.</p>
+                    
+                    <p>This approach transforms traditional computer science education by making algorithmic thinking physical and immediately visible. Students can see the direct results of their logical reasoning as Pomelo navigates through challenges they've designed.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Key Features:</h3>
+                    <ul>
+                        <li>Computer vision system using OpenCV for block recognition</li>
+                        <li>Aruco marker detection and interpretation</li>
+                        <li>Real-time path planning and navigation algorithms</li>
+                        <li>Interactive maze-solving capabilities</li>
+                        <li>Educational curriculum integration</li>
+                        <li>Child-friendly robot design and safety features</li>
+                        <li>Modular block system for various programming concepts</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">OpenCV</span>
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Autodesk Fusion</span>
+                    <span class="tech-badge">Robotics</span>
+                    <span class="tech-badge">Computer Vision</span>
+                    <span class="tech-badge">Education Technology</span>
+                </div>
+                
+                <div class="project-links">
+                    <a href="https://github.com/ranataki/pomelo" target="_blank" class="project-link">
+                        <i class="fab fa-github"></i> VIEW ON GITHUB
+                    </a>
+                    <a href="https://dl.acm.org/doi/10.5555/3378680.3378882" target="_blank" class="project-link">
+                        <i class="fas fa-file-alt"></i> READ OUR PAPER
+                    </a>
+                    <a href="#" class="project-link">
+                        <i class="fas fa-play"></i> DEMO VIDEO
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project 3 Modal -->
+    <div id="project3Modal" class="project-modal">
+        <div class="project-modal-content">
+            <button class="modal-close" onclick="closeProjectModal('project3')">&times;</button>
+            <div class="project-details">
+                <h2>FLIGHT LOG APPLICATION</h2>
+                
+                <div class="description">
+                    <p>A comprehensive flight tracking application designed specifically for pilots to log flights, track training progress, and manage aviation data. The app combines my passion for aviation with software development skills to create a tool that addresses real needs in the pilot community.</p>
+                    
+                    <p>The application features an intuitive interface for logging flight details, automatic calculation of flight time and experience requirements, and progress tracking toward various aviation milestones and certifications.</p>
+                    
+                    <p>Built with modern iOS development practices, the app leverages Core Data for efficient local storage and provides offline functionality essential for aviation use cases.</p>
+                </div>
+                
+                <div class="project-features">
+                    <h3>Key Features:</h3>
+                    <ul>
+                        <li>Comprehensive flight logging with detailed entry forms</li>
+                        <li>Automatic calculation of flight hours and experience</li>
+                        <li>Progress tracking for pilot certifications (PPL, IFR, etc.)</li>
+                        <li>Aircraft management and maintenance tracking</li>
+                        <li>Weather integration for flight planning</li>
+                        <li>Export capabilities for official logbook requirements</li>
+                        <li>Offline functionality for use in remote locations</li>
+                        <li>Clean, pilot-focused user interface design</li>
+                    </ul>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-badge">Swift</span>
+                    <span class="tech-badge">SwiftUI</span>
+                    <span class="tech-badge">Core Data</span>
+                    <span class="tech-badge">iOS Development</span>
+                    <span class="tech-badge">Aviation</span>
+                    <span class="tech-badge">UI/UX Design</span>
+                </div>
+                
+                <div class="project-links">
+                    <a href="#" class="project-link">
+                        <i class="fas fa-rocket"></i> COMING SOON
+                    </a>
+                    <a href="#" class="project-link">
+                        <i class="fab fa-app-store"></i> APP STORE
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-text">SCROLL FOR MORE ✧</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Custom cursor
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.custom-cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Fade in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Category filtering functionality
+        function filterProjects(category) {
+            const projects = document.querySelectorAll('.project-preview');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            
+            // Filter projects
+            projects.forEach(project => {
+                const categories = project.getAttribute('data-categories');
+                
+                if (category === 'all' || categories.includes(category)) {
+                    project.classList.remove('hidden');
+                    project.style.display = 'block';
+                } else {
+                    project.classList.add('hidden');
+                    project.style.display = 'none';
+                }
+            });
+        }
+
+        // Add event listeners to filter buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const category = btn.getAttribute('data-category');
+                    filterProjects(category);
+                });
+            });
+        });
+
+        // Project modal functions
+        function openProjectModal(projectId) {
+            const modal = document.getElementById(projectId + 'Modal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal(projectId) {
+            const modal = document.getElementById(projectId + 'Modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('project-modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal with escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const openModal = document.querySelector('.project-modal[style*="block"]');
+                if (openModal) {
+                    openModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+
+        // PDF Viewer toggle function
+        function togglePDFViewer(project = '') {
+            let viewerId, buttonSelector;
+            
+            if (project === 'izmo') {
+                viewerId = 'izmoPdfViewer';
+                buttonSelector = '#project11Modal .pdf-toggle-btn';
+            } else {
+                viewerId = 'pdfViewer';
+                buttonSelector = '#project10Modal .pdf-toggle-btn';
+            }
+            
+            const viewer = document.getElementById(viewerId);
+            const button = document.querySelector(buttonSelector);
+            
+            if (viewer.style.display === 'none' || viewer.style.display === '') {
+                viewer.style.display = 'block';
+                button.innerHTML = '🔼 Hide Preview';
+            } else {
+                viewer.style.display = 'none';
+                button.innerHTML = '👁️ Preview Paper';
+            }
+        }
+
+        // Gallery image lightbox (optional enhancement)
+        document.querySelectorAll('.gallery-image').forEach(img => {
+            img.addEventListener('click', (e) => {
+                // You can add lightbox functionality here if desired
+                e.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>

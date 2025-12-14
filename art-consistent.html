@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ART & PHOTOGRAPHY ✧ RANA TAKI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <style>
+        /* Art-specific styles using consistent design patterns */
+        .art-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .art-category {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 2px solid transparent;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .art-category:hover {
+            transform: translateY(-5px);
+            border-color: var(--red);
+            box-shadow: 0 10px 30px rgba(255, 59, 48, 0.2);
+        }
+        
+        .art-category-header {
+            padding: 2rem 2rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .art-category-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+        }
+        
+        .art-category-description {
+            color: rgba(245, 245, 241, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .art-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            padding: 1rem;
+        }
+        
+        .art-preview-item {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .art-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .art-category:hover .art-preview-item img {
+            transform: scale(1.05);
+        }
+        
+        .art-category-footer {
+            padding: 1rem 2rem 2rem;
+            text-align: center;
+        }
+        
+        .view-gallery-btn {
+            background: transparent;
+            border: 2px solid var(--red);
+            color: var(--red);
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .view-gallery-btn:hover {
+            background: var(--red);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Alternative: Tabbed Gallery Layout */
+        .gallery-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .gallery-tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--cream);
+            border-radius: 6px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-tab.active {
+            border-color: var(--red);
+            background: var(--red);
+            color: white;
+        }
+        
+        .gallery-tab:hover:not(.active) {
+            border-color: var(--red);
+            color: var(--red);
+        }
+        
+        .gallery-content {
+            display: none;
+        }
+        
+        .gallery-content.active {
+            display: block;
+        }
+        
+        .simple-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .simple-gallery-item {
+            aspect-ratio: 4/3;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .simple-gallery-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--red);
+            box-shadow: 0 8px 25px rgba(255, 59, 48, 0.2);
+        }
+        
+        .simple-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .simple-gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Modal styles consistent with projects page */
+        .art-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .art-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .art-modal-content img,
+        .art-modal-content video {
+            width: 100%;
+            height: auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .art-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 2001;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            transition: background 0.3s ease;
+        }
+        
+        .art-modal-close:hover {
+            background: var(--red);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .art-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .gallery-tabs {
+                gap: 0.5rem;
+            }
+            
+            .gallery-tab {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .simple-gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    
+    <nav class="nav-container">
+        <div class="nav-content">
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">RANA</a></li>
+                <li><a href="projects-new.html" class="nav-link">PROJECTS</a></li>
+                <li><a href="art-consistent.html" class="nav-link active">ART & PHOTOGRAPHY</a></li>
+                <li><a href="resume.html" class="nav-link">RESUME</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="rotated-text">CREATIVE WORKS ✧ 2024</div>
+
+    <main>
+        <div class="content-wrapper">
+            <!-- Hero Section - Consistent with projects page -->
+            <section class="grid-container">
+                <div class="col-span-12">
+                    <h1 class="mega-text fade-in" style="font-size: clamp(3rem, 10vw, 6rem);">ART &<br>PHOTOGRAPHY<span class="sparkle">✧</span></h1>
+                </div>
+            </section>
+
+            <!-- Option 1: Category Cards Layout -->
+            <section class="grid-container" id="categoryLayout">
+                <div class="col-span-12">
+                    <div class="art-grid">
+                        <!-- Sports Photography Category -->
+                        <div class="art-category fade-in" onclick="openGallery('sports')">
+                            <div class="art-category-header">
+                                <h2 class="art-category-title">SPORTS PHOTOGRAPHY</h2>
+                                <p class="art-category-description">Capturing the intensity, emotion, and decisive moments in athletic competition</p>
+                            </div>
+                            <div class="art-preview-grid">
+                                <div class="art-preview-item">
+                                    <img src="images/sports/preview-1.jpg" alt="Sports Preview 1">
+                                </div>
+                                <div class="art-preview-item">
+                                    <img src="images/sports/preview-2.jpg" alt="Sports Preview 2">
+                                </div>
+                                <div class="art-preview-item">
+                                    <img src="images/sports/preview-3.jpg" alt="Sports Preview 3">
+                                </div>
+                                <div class="art-preview-item">
+                                    <img src="images/sports/preview-4.jpg" alt="Sports Preview 4">
+                                </div>
+                            </div>
+                            <div class="art-category-footer">
+                                <span class="view-gallery-btn">VIEW GALLERY</span>
+                            </div>
+                        </div>
+
+                        <!-- Paintings Category -->
+                        <div class="art-category fade-in" onclick="openGallery('paintings')">
+                            <div class="art-category-header">
+                                <h2 class="art-category-title">PAINTINGS</h2>
+                                <p class="art-category-description">Traditional and digital paintings exploring color, light, and human expression</p>
+                            </div>
+                            <div class="art-preview-grid">
+                                <div class="art-preview-item">
+                                    <img src="images/paintings/preview-1.jpg" alt="Painting Preview 1">
+                                </div>
+                                <div class="art-preview-item">
+                                    <img src="images/paintings/preview-2.jpg" alt="Painting Preview 2">
+                                </div>
+                                <div class="art-preview-item">
+                                    <img src="images/paintings/preview-3.jpg" alt="Painting Preview 3">
+                                </div>
+                                <div class="art-preview-item">
+                                    <img src="images/paintings/preview-4.jpg" alt="Painting Preview 4">
+                                </div>
+                            </div>
+                            <div class="art-category-footer">
+                                <span class="view-gallery-btn">VIEW GALLERY</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Option 2: Tabbed Gallery Layout (Alternative) -->
+            <section class="grid-container" id="tabbedLayout" style="display: none;">
+                <div class="col-span-12">
+                    <div class="gallery-tabs">
+                        <button class="gallery-tab active" onclick="showGallery('sports-tab')">SPORTS PHOTOGRAPHY</button>
+                        <button class="gallery-tab" onclick="showGallery('paintings-tab')">PAINTINGS</button>
+                    </div>
+                    
+                    <!-- Sports Photography Gallery -->
+                    <div id="sports-tab" class="gallery-content active">
+                        <div class="simple-gallery-grid">
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/sports/action-1.jpg')">
+                                <img src="images/sports/action-1.jpg" alt="Sports Photo 1">
+                            </div>
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/sports/action-2.jpg')">
+                                <img src="images/sports/action-2.jpg" alt="Sports Photo 2">
+                            </div>
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/sports/action-3.jpg')">
+                                <img src="images/sports/action-3.jpg" alt="Sports Photo 3">
+                            </div>
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/sports/action-4.jpg')">
+                                <img src="images/sports/action-4.jpg" alt="Sports Photo 4">
+                            </div>
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/sports/action-5.jpg')">
+                                <img src="images/sports/action-5.jpg" alt="Sports Photo 5">
+                            </div>
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/sports/action-6.jpg')">
+                                <img src="images/sports/action-6.jpg" alt="Sports Photo 6">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Paintings Gallery -->
+                    <div id="paintings-tab" class="gallery-content">
+                        <div class="simple-gallery-grid">
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/paintings/portrait-1.jpg')">
+                                <img src="images/paintings/portrait-1.jpg" alt="Painting 1">
+                            </div>
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/paintings/landscape-1.jpg')">
+                                <img src="images/paintings/landscape-1.jpg" alt="Painting 2">
+                            </div>
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/paintings/abstract-1.jpg')">
+                                <img src="images/paintings/abstract-1.jpg" alt="Painting 3">
+                            </div>
+                            <div class="simple-gallery-item fade-in" onclick="openModal('images/paintings/still-life-1.jpg')">
+                                <img src="images/paintings/still-life-1.jpg" alt="Painting 4">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Art Modal -->
+    <div id="artModal" class="art-modal" onclick="closeModal()">
+        <button class="art-modal-close" onclick="closeModal()">&times;</button>
+        <div class="art-modal-content" onclick="event.stopPropagation()">
+            <img id="modalImage" src="" alt="" style="display: none;">
+            <video id="modalVideo" controls style="display: none;">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="https://github.com/ranataki" target="_blank" class="social-link">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com/in/rana-taki-76725b192/" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://medium.com/@ranataki13" target="_blank" class="social-link">
+                <i class="fab fa-medium"></i>
+            </a>
+        </div>
+    </footer>
+
+    <div class="scroll-text">SCROLL FOR MORE ✧</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Custom cursor
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.custom-cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Toggle between layout options
+        function toggleLayout() {
+            const categoryLayout = document.getElementById('categoryLayout');
+            const tabbedLayout = document.getElementById('tabbedLayout');
+            
+            if (categoryLayout.style.display === 'none') {
+                categoryLayout.style.display = 'block';
+                tabbedLayout.style.display = 'none';
+            } else {
+                categoryLayout.style.display = 'none';
+                tabbedLayout.style.display = 'block';
+            }
+        }
+
+        // Gallery functions for tabbed layout
+        function showGallery(galleryId) {
+            // Hide all gallery contents
+            document.querySelectorAll('.gallery-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.gallery-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected gallery and activate tab
+            document.getElementById(galleryId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Modal functions
+        function openModal(src, type = 'image') {
+            const modal = document.getElementById('artModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalVideo = document.getElementById('modalVideo');
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            if (type === 'video') {
+                modalImage.style.display = 'none';
+                modalVideo.style.display = 'block';
+                modalVideo.querySelector('source').src = src;
+                modalVideo.load();
+            } else {
+                modalVideo.style.display = 'none';
+                modalImage.style.display = 'block';
+                modalImage.src = src;
+            }
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('artModal');
+            const modalVideo = document.getElementById('modalVideo');
+            
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            modalVideo.pause();
+        }
+        
+        // Gallery navigation for category cards
+        function openGallery(category) {
+            return;
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Fade in animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

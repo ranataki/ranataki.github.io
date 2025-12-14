@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RANA TAKI ✧ CREATIVE DEVELOPER</title>
+    <title>Rana Taki - Mechanical & Software Engineer & Pilot | Personal Portfolio</title>
+    <meta name="description" content="Rana Taki is a software engineer with expertise in AI, computer graphics, and mechanical engineering. Passionate about coding, flying, and creating digital art.">
+    <meta name="keywords" content="Rana Taki, software engineer, pilot, artist, computer graphics, AI, Stanford, programming, aviation, digital art">
+    <meta name="author" content="Rana Taki">
+    <meta property="og:title" content="Rana Taki - Software Engineer & Pilot">
+    <meta property="og:description" content="Personal portfolio of Rana Taki showcasing software engineering projects, aviation pursuits, and creative work.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com">
+    <meta property="og:image" content="https://your-domain.com/images/profile/profile-1.jpg">
+    <link rel="canonical" href="https://your-domain.com">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,10 +25,9 @@
         <div class="nav-content">
             <ul class="nav-links">
                 <li><a href="index.html" class="nav-link">RANA</a></li>
-                <li><a href="projects.html" class="nav-link">PROJECTS</a></li>
-                <li><a href="art.html" class="nav-link">ART</a></li>
-                <li><a href="flight-updates.html" class="nav-link">FLIGHT LOG</a></li>
-                <li><a href="https://drive.google.com/file/d/1bYOR4DyamoXm8ZdM0OxGpfBMS4rJlVun/view?usp=sharing" target="_blank" class="nav-link">RESUME</a></li>
+                <li><a href="projects-new.html" class="nav-link">PROJECTS</a></li>
+                <li><a href="art-consistent.html" class="nav-link">ART & PHOTOGRAPHY</a></li>
+                <li><a href="resume.html" class="nav-link">RESUME</a></li>
             </ul>
         </div>
     </nav>
@@ -36,7 +44,12 @@
                     </div>
                 </div>
                 <div class="hero-image fade-in">
-                    <img src="images/profile.jpg" alt="Rana Taki">
+                    <div class="rotating-profile">
+                        <img src="images/profile/profile-1.jpg" alt="Rana Hiking" class="profile-img active">
+                        <img src="images/profile/profile-2.jpg" alt="Rana Running" class="profile-img">
+                        <img src="images/profile/profile-3.jpg" alt="Rana Flying" class="profile-img">
+                        <img src="images/profile/profile-4.jpg" alt="Rana Skiing" class="profile-img">
+                    </div>
                 </div>
             </section>
 
@@ -44,15 +57,10 @@
                 <div class="about-content">
                     <h2 class="about-title fade-in">ABOUT ME</h2>
                     <p class="about-text fade-in">
-                        I'm a software engineer with a passion for pushing limits in both code and flight. 
-                        When I'm not crafting digital experiences or writing elegant code, you'll find me in
-                        the cockpit, learning how to do loop de loops, or in the studio, spending hours to 
-                        figure out the color composition of my next painting.
-                    </p>
-                    <p class="about-text fade-in">
-                        I like to bring tech into my hobbies. I find coding to be a very elegant solution to
-                        the problems I face in real life: logging in flights, finding cool art exhibitions,
-                        and navigating through my medical problems.
+                        I'm a senior in Stanford studying mechanical engineering and computer science. 
+                        I love to build (both physically and digitally) and create. When I'm not in the PRL, 
+                        or at home coding, you can find me in the cockpit, learning how to do loop de loops, 
+                        or in the studio, spending hours to figure out the color composition of my next painting.
                     </p>
                     <div class="tech-stack fade-in">
                         <span class="tech-badge">C/C#/C++</span>
@@ -69,8 +77,8 @@
                         <li style="margin-bottom: 1rem;">✧ Currently working on my Private Pilot License</li>
                         <li style="margin-bottom: 1rem;">✧ Building a flight tracking application</li>
                         <li style="margin-bottom: 1rem;">✧ Learning aerobatic maneuvers</li>
-                        <li style="margin-bottom: 1rem;">✧ Doing research in Stanford Computer Graphics lab on how to best model hair</li>
-                        <li style="margin-bottom: 1rem;">✧ TA'ing one of my fav classes at Stanford: PYSC 135 Sleep and Dreams!!!</li>
+                        <li style="margin-bottom: 1rem;">✧ Doing research in Stanford Intelligent Systems Lab on how to teach LLMs to read the pilot operating handbook</li>
+                        <li style="margin-bottom: 1rem;">✧ Training for a marathon in March! </li>
                     </ul>
                 </div>
             </section>
@@ -102,19 +110,41 @@
             cursor.style.top = e.clientY + 'px';
         });
 
-        // Fade in animations
+        // Rotating profile pictures
+        let currentProfileIndex = 0;
+        const profileImages = document.querySelectorAll('.profile-img');
+        
+        function rotateProfile() {
+            // Remove active class from current image
+            profileImages[currentProfileIndex].classList.remove('active');
+            
+            // Move to next image
+            currentProfileIndex = (currentProfileIndex + 1) % profileImages.length;
+            
+            // Add active class to new image
+            profileImages[currentProfileIndex].classList.add('active');
+        }
+        
+        // Rotate every 3 seconds
+        setInterval(rotateProfile, 3000);
+
+        // Fade in animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, {
-            threshold: 0.1
-        });
+        }, observerOptions);
 
-        document.querySelectorAll('.fade-in').forEach(element => {
-            observer.observe(element);
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
         });
     </script>
 </body>
