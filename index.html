@@ -23,6 +23,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="css/styles.css">
     
+    <style>
+        .nav-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.5rem 3rem;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-content { display: flex; justify-content: center; }
+        .nav-links { display: flex; gap: 3rem; list-style: none; }
+        .nav-link {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #999999;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-link:hover, .nav-link.active { color: #ff3b30; }
+    </style>
+    
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
     {
@@ -31,7 +55,7 @@
         "name": "Rana Taki",
         "url": "https://ranataki.github.io",
         "image": "https://ranataki.github.io/images/profile/profile-1.jpg",
-        "jobTitle": ["Mechanical Engineer", "Computer Science Student", "Pilot", "Artist"],
+        "jobTitle": ["Mechanical Engineer", "Computer Science", "Pilot", "Artist"],
         "affiliation": {
             "@type": "Organization",
             "name": "Stanford University"
@@ -57,7 +81,6 @@
             <ul class="nav-links">
                 <li><a href="index.html" class="nav-link">RANA</a></li>
                 <li><a href="projects-new.html" class="nav-link">PROJECTS</a></li>
-                <li><a href="art-consistent.html" class="nav-link">ART & PHOTOGRAPHY</a></li>
                 <li><a href="resume.html" class="nav-link">RESUME</a></li>
             </ul>
         </div>
@@ -85,14 +108,15 @@
                     <p class="about-text fade-in">
                         I'm a senior in Stanford studying mechanical engineering and computer science. 
                         I love to build (both physically and digitally) and create. When I'm not in the PRL, 
-                        or at home coding, you can find me in the cockpit, learning how to do loop de loops, 
+                        or at home CADing, you can find me in the cockpit, learning how to do loop de loops, 
                         or in the studio, spending hours to figure out the color composition of my next painting.
                     </p>
                     <div class="tech-stack fade-in">
-                        <span class="tech-badge">C/C#/C++</span>
+                        <span class="tech-badge">FUSION360/SOLIDWORKS</span>
                         <span class="tech-badge">PYTHON</span>
-                        <span class="tech-badge">BLENDER</span>
-                        <span class="tech-badge">UI/UX</span>
+                        <span class="tech-badge">FEA/DFME</span>
+                        <span class="tech-badge">STRUCTURES</span>
+                        <span class="tech-badge">ABAQUS</span>
                         <span class="tech-badge">AEROBATICS</span>
                     </div>
                 </div>
@@ -101,10 +125,10 @@
                     <h2 class="about-title fade-in">LATEST UPDATES</h2>
                     <ul class="updates-list fade-in" style="list-style: none; padding: 0;">
                         <li style="margin-bottom: 1rem;">✧ Currently working on my Private Pilot License</li>
-                        <li style="margin-bottom: 1rem;">✧ Building a flight tracking application</li>
+                        <li style="margin-bottom: 1rem;">✧ Working on Oblique Wing Airplanes in Aircraft Design Lab!</li>
                         <li style="margin-bottom: 1rem;">✧ Learning aerobatic maneuvers</li>
-                        <li style="margin-bottom: 1rem;">✧ Doing research in Stanford Intelligent Systems Lab on how to teach LLMs to read the pilot operating handbook</li>
-                        <li style="margin-bottom: 1rem;">✧ Training for a marathon in March! </li>
+                        <li style="margin-bottom: 1rem;">✧ Building my own quadcopter!</li>
+                        <li style="margin-bottom: 1rem;">✧ Getting into cycling! </li>
                     </ul>
                 </div>
             </section>

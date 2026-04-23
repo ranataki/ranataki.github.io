@@ -51,6 +51,27 @@
             color: white;
             transform: translateY(-2px);
         }
+        .nav-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.5rem 3rem;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-content { display: flex; justify-content: center; }
+        .nav-links { display: flex; gap: 3rem; list-style: none; }
+        .nav-link {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #999999;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-link:hover, .nav-link.active { color: #ff3b30; }
     </style>
 </head>
 <body>
@@ -61,7 +82,6 @@
             <ul class="nav-links">
                 <li><a href="index.html" class="nav-link">RANA</a></li>
                 <li><a href="projects-new.html" class="nav-link">PROJECTS</a></li>
-                <li><a href="art-consistent.html" class="nav-link">ART & PHOTOGRAPHY</a></li>
                 <li><a href="resume.html" class="nav-link active">RESUME</a></li>
             </ul>
         </div>
@@ -71,11 +91,6 @@
 
     <main>
         <div class="content-wrapper">
-            <section class="grid-container">
-                <div class="col-span-12">
-                    <h1 class="mega-text fade-in" style="font-size: clamp(3rem, 10vw, 6rem);">RESUME<span class="sparkle">✧</span></h1>
-                </div>
-            </section>
 
             <section class="grid-container">
                 <div class="col-span-12">
